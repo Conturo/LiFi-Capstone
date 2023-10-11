@@ -2,7 +2,7 @@ import socket
 import time
 
 # server IP and port
-server_ip = '192.168.1.2'
+# server_ip = '192.168.1.2'
 server_port = 12345
 server_ip = socket.gethostname()
 
