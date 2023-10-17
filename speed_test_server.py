@@ -2,7 +2,7 @@ import socket
 import time
 
 # server IP and port
-# server_ip = '192.168.1.2'
+#server_ip = '192.168.1.2'
 server_port = 12345
 server_ip = socket.gethostname()
 
@@ -22,8 +22,8 @@ while True:
     start_time = time.time_ns()  # Record the start time
 
     # Receive data from the client
-    #received_data = client_socket.recv(1024)
-    print(received_data)
+    received_data = client_socket.recv(10000000)
+    #print(received_data)
 
     end_time = time.time_ns()  # Record the end time
 
@@ -32,7 +32,7 @@ while True:
     print(f"Data transfer time: {transfer_time:.4f} nanoseconds")
 
     # Calculate and print the data transfer rate
-    data_rate = float(len(received_data)) / transfer_time / 1024.0  # In KB/s
+    data_rate = float(len(received_data)) / transfer_time*pow(10,9) /1024 # In KB/s
     print(f"Data transfer rate: {data_rate:.2f} KB/s")
 
     # Close the client socket
