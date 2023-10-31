@@ -9,13 +9,18 @@ DATA_SIZE = 1000000
 server_port = 12345
 server_ip = socket.gethostname()
 
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print(f"Listening on {server_ip}")
 
-outputFile = open("server_results.csv", "a")
-outputFile.write("Trial #,Data Transfer Time (ns),Data Size (Bytes),Data Transfer Rate (KB/s)")
+
+
+outputFile = open("server_results.csv", "w")
+outputFile.write("Trial #,Data Transfer Time (ns),Data Size (Bytes),Data Transfer Rate (KB/s)\n")
 
 
 for i in range(50):
+    time.sleep(1)
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
     server_socket.bind((server_ip, server_port))
 
     server_socket.listen()
@@ -34,11 +39,13 @@ for i in range(50):
     transfer_time = end_time - start_time
     
     # Calculate and print the data transfer rate
-    data_rate = float(len(received_data)) / transfer_time*pow(10,9) /1024 # In KB/s
-    
+    try:
+        data_rate = float(len(received_data)) / transfer_time*pow(10,9) /1024 # In KB/s
+    except:
+        data_rate = 0
     outputFile.write(f"{i+1},{transfer_time},{DATA_SIZE},{data_rate}\n")
     
-    # Close the client socket
+    # Close the server socket
     server_socket.close()
 
 outputFile.close()
